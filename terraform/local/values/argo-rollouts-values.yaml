@@ -1,0 +1,9 @@
+dashboard:
+  enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - rollouts.local
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web

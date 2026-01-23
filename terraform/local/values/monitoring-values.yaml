@@ -1,0 +1,28 @@
+grafana:
+  adminUser: admin
+  adminPassword: "CHANGEME"
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - grafana.local
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web
+
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - prometheus.local
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web
+
+alertmanager:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - alertmanager.local
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web

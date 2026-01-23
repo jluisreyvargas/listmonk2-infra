@@ -1,0 +1,22 @@
+loki:
+  auth_enabled: false
+
+singleBinary:
+  replicas: 1
+
+gateway:
+  enabled: true
+
+# almacenamiento en filesystem para local
+storage:
+  type: filesystem
+
+# evita necesitar object storage
+chunksCache:
+  enabled: false
+resultsCache:
+  enabled: false
+
+monitoring:
+  serviceMonitor:
+    enabled: true

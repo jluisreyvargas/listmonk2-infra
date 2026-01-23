@@ -1,0 +1,12 @@
+configs:
+  params:
+    server.insecure: true
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - argocd.local
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web
