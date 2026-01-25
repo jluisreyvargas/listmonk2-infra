@@ -128,9 +128,45 @@ resource "helm_release" "loki" {
   chart      = "loki"
   version    = "6.49.0"
 
-  values = [
-    file("${path.module}/values/loki-values.yaml")
-  ]
+values = [yamlencode({
+  deploymentMode = "SingleBinary"
+
+  loki = {
+    auth_enabled = false
+    commonConfig = {
+      replication_factor = 1
+    }
+    storage = {
+      type = "filesystem"
+    }
+    schemaConfig = {
+      configs = [
+        {
+          from = "2024-01-01"
+          store = "tsdb"
+          object_store = "filesystem"
+          schema = "v13"
+          index = {
+            prefix = "index_"
+            period = "24h"
+          }
+        }
+      ]
+    }
+  }
+
+  singleBinary = {
+    replicas = 1
+  }
+
+  # Desactiva componentes distribuidos que asumen S3
+  write = { replicas = 0 }
+  read  = { replicas = 0 }
+  backend = { replicas = 0 }
+
+  gateway = { enabled = false }
+})]
+
 }
 
 resource "helm_release" "promtail" {
