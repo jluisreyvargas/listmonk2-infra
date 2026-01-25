@@ -1,6 +1,16 @@
 grafana:
   adminUser: admin
   adminPassword: "CHANGEME"
+
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki.logging.svc.cluster.local:3100
+      isDefault: false
+      jsonData:
+        maxLines: 1000
+
   ingress:
     enabled: true
     ingressClassName: traefik
