@@ -1,10 +1,10 @@
 locals {
   common_labels = {
-    "app.kubernetes.io/part-of"   = var.project_name
+    "app.kubernetes.io/part-of"    = var.project_name
     "app.kubernetes.io/managed-by" = "terraform"
-    "project" = var.project_name
-    "env"     = var.environment
-    "owner"   = var.owner
+    "project"                      = var.project_name
+    "env"                          = var.environment
+    "owner"                        = var.owner
   }
 
   hosts = {

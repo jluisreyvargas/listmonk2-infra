@@ -128,44 +128,44 @@ resource "helm_release" "loki" {
   chart      = "loki"
   version    = "6.49.0"
 
-values = [yamlencode({
-  deploymentMode = "SingleBinary"
+  values = [yamlencode({
+    deploymentMode = "SingleBinary"
 
-  loki = {
-    auth_enabled = false
-    commonConfig = {
-      replication_factor = 1
-    }
-    storage = {
-      type = "filesystem"
-    }
-    schemaConfig = {
-      configs = [
-        {
-          from = "2024-01-01"
-          store = "tsdb"
-          object_store = "filesystem"
-          schema = "v13"
-          index = {
-            prefix = "index_"
-            period = "24h"
+    loki = {
+      auth_enabled = false
+      commonConfig = {
+        replication_factor = 1
+      }
+      storage = {
+        type = "filesystem"
+      }
+      schemaConfig = {
+        configs = [
+          {
+            from         = "2024-01-01"
+            store        = "tsdb"
+            object_store = "filesystem"
+            schema       = "v13"
+            index = {
+              prefix = "index_"
+              period = "24h"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
-  }
 
-  singleBinary = {
-    replicas = 1
-  }
+    singleBinary = {
+      replicas = 1
+    }
 
-  # Desactiva componentes distribuidos que asumen S3
-  write = { replicas = 0 }
-  read  = { replicas = 0 }
-  backend = { replicas = 0 }
+    # Desactiva componentes distribuidos que asumen S3
+    write   = { replicas = 0 }
+    read    = { replicas = 0 }
+    backend = { replicas = 0 }
 
-  gateway = { enabled = false }
-})]
+    gateway = { enabled = false }
+  })]
 
 }
 
@@ -191,8 +191,8 @@ resource "kubernetes_ingress_v1" "loki" {
     name      = "loki"
     namespace = kubernetes_namespace.logging.metadata[0].name
     annotations = {
-      "kubernetes.io/ingress.class"                             = "traefik"
-      "traefik.ingress.kubernetes.io/router.entrypoints"       = "web"
+      "kubernetes.io/ingress.class"                      = "traefik"
+      "traefik.ingress.kubernetes.io/router.entrypoints" = "web"
     }
     labels = local.common_labels
   }
@@ -281,5 +281,12 @@ resource "kubernetes_manifest" "argocd_application" {
     }
   }
 
-  depends_on = [kubernetes_manifest.argocd_project]
+  field_manager {
+    name            = "terraform"
+    force_conflicts = true
+  }
+
+  depends_on = [
+    kubernetes_manifest.argocd_project
+  ]
 }
