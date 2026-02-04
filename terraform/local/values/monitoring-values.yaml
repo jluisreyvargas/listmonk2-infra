@@ -19,6 +19,20 @@ grafana:
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: web
 
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  # Grafana suele escribir en /var/lib/grafana, por eso NO pongo readOnlyRootFilesystem
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+
 prometheus:
   ingress:
     enabled: true
@@ -28,6 +42,19 @@ prometheus:
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: web
 
+  prometheusSpec:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 2Gi
+
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+
 alertmanager:
   ingress:
     enabled: true
@@ -36,3 +63,16 @@ alertmanager:
       - alertmanager.local
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: web
+
+  alertmanagerSpec:
+    resources:
+      requests:
+        cpu: 20m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false

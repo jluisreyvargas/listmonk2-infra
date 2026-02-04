@@ -4,14 +4,45 @@ loki:
 singleBinary:
   replicas: 1
 
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 2Gi
+
+  podSecurityContext:
+    runAsNonRoot: true
+
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+
 gateway:
   enabled: true
+
+  resources:
+    requests:
+      cpu: 20m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+  podSecurityContext:
+    runAsNonRoot: true
+
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
 
 # almacenamiento en filesystem para local
 storage:
   type: filesystem
 
-# evita necesitar object storage
 chunksCache:
   enabled: false
 resultsCache:
