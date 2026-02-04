@@ -11,7 +11,7 @@ server:
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: web
 
- resources:
+  resources:
     requests:
       cpu: 50m
       memory: 128Mi
