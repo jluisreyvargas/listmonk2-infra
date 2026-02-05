@@ -88,4 +88,4 @@ kubectl -n monitoring describe deploy kube-prometheus-stack-grafana   | egrep -n
 ```
 
 ---
-Generado: 2026-02-05T16:01:07.344201Z
+
