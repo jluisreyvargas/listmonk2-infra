@@ -459,16 +459,6 @@ Antes de dar el entorno por operativo:
 - (Si aplica) Mailpit recibe emails de prueba.
 - Los secretos se gestionan exclusivamente vía Sealed Secrets.
 
-## 10. Información a completar
-Para que esta guía sea 100% autocontenida, conviene añadir:
-- URL/hostname del Ingress y TLS (si aplica).
-- Cómo se instala Argo CD en este proyecto (Helm/Terraform, chart y valores principales).
-- Cómo se instala/gestiona PostgreSQL (RDS/Helm, backups, política de retención).
-- Procedimiento exacto para generar/rotar Sealed Secrets (comandos y prerequisitos de `kubeseal`).
-- Mapa de overlays disponibles (local/dev/staging/prod) y diferencias entre ellos.
-
-
-
 ## Guía rápida de primer despliegue (local/k3s)
 
 ### Flujo del sistema (visión operativa)
